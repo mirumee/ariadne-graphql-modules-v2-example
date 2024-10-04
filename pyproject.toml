@@ -1,0 +1,64 @@
+[project]
+name = "ariadne-graphql-modules-v2-example"
+version = "0.1.0"
+description = "An example GraphQL API implemented using the Ariadne GraphQL Modules v2."
+authors = [{ name = "Rafał Pitoń", email = "rafio.xudb@gmail.com" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Environment :: Web Environment",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "ariadne>=0.23.0",
+  "ariadne-graphql-modules@git+https://github.com/mirumee/ariadne-graphql-modules@next-api",
+]
+
+[project.optional-dependencies]
+dev = ["black", "mypy", "pylint"]
+test = [
+  "pytest",
+  "pytest-asyncio",
+  "pytest-benchmark",
+  "pytest-cov",
+  "pytest-mock",
+  "freezegun",
+  "syrupy",
+  "werkzeug",
+  "httpx",
+  "opentracing",
+  "opentelemetry-api",
+  "python-multipart>=0.0.5",
+  "aiodataloader",
+  "graphql-sync-dataloaders;python_version>\"3.7\"",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | snapshots
+)/
+'''
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+testpaths = ["tests"]
