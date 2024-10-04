@@ -16,16 +16,20 @@ class Query(GraphQLObject):
         return "Hello world!"
 
     @GraphQLObject.field(args={"filter_": GraphQLObject.argument("filter")})
-    async def groups(obj, info: GraphQLResolveInfo, filter_: GroupFilter) -> list[GroupType]:
+    @staticmethod
+    async def groups(
+        obj, info: GraphQLResolveInfo, filter_: GroupFilter = GroupFilter.ALL
+    ) -> list[GroupType]:
         if filter_ == GroupFilter.ADMIN:
             return await db.get_all("groups", is_admin=True)
 
         if filter_ == GroupFilter.MEMBER:
             return await db.get_all("groups", is_admin=False)
-        
+
         return await db.get_all("groups")
 
     @GraphQLObject.field()
+    @staticmethod
     async def group(obj, info: GraphQLResolveInfo, id: str) -> GroupType | None:
         try:
             id_int = int(id)
@@ -35,6 +39,7 @@ class Query(GraphQLObject):
         return await db.get_row("groups", id=id_int)
 
     @GraphQLObject.field()
+    @staticmethod
     async def users(obj, info: GraphQLResolveInfo) -> list[UserType]:
         return await db.get_all("users")
 
