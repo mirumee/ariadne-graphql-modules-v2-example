@@ -65,3 +65,40 @@ async def test_query_groups_field_member_arg(exec_query):
             },
         ],
     }
+
+
+@pytest.mark.asyncio
+async def test_query_users(exec_query):
+    result = await exec_query("{ users { id username group { name } } }")
+    assert result.data == {
+        "users": [
+            {
+                "id": "1",
+                "username": "JohnDoe",
+                "group": {
+                    "name": "Admins",
+                },
+            },
+            {
+                "id": "2",
+                "username": "Alice",
+                "group": {
+                    "name": "Admins",
+                },
+            },
+            {
+                "id": "3",
+                "username": "Bob",
+                "group": {
+                    "name": "Members",
+                },
+            },
+            {
+                "id": "4",
+                "username": "Mia",
+                "group": {
+                    "name": "Members",
+                },
+            },
+        ],
+    }
