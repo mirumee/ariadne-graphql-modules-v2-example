@@ -5,11 +5,14 @@ from .fixture import get_data
 
 class DataBase:
     _data: dict[str, dict[int, Any]]
-    _id: int
+    _id: dict[str, int]
 
-    def __init__(self, data: dict[str, dict[int, Any]], counter: int = 0):
+    def __init__(self, data: dict[str, dict[int, Any]]):
         self._data = data
-        self._id = counter
+        self._id = {}
+
+        for table_name, table_data in data.items():
+            self._id[table_name] = max(list(table_data))
 
     async def get_row(self, table: str, **kwargs) -> Any:
         assert kwargs, "use kwargs to filter"
@@ -40,8 +43,8 @@ class DataBase:
     async def insert(self, table: str, obj: Any):
         assert obj.id is None, "obj.id attr must be None"
 
-        self._id += 1
-        obj.id = self._id
+        self._id[table] += 1
+        obj.id = self._id[table]
 
         self._data[table][obj.id] = obj
 
@@ -52,4 +55,4 @@ class DataBase:
         self._data[table].pop(id, None)
 
 
-db = DataBase(get_data(), 1000)
+db = DataBase(get_data())

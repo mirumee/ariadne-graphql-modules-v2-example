@@ -5,5 +5,4 @@ from dataclasses import dataclass
 class User:
     id: int
     username: str
-    email: str
     group_id: int

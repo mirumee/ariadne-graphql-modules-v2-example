@@ -1,4 +1,4 @@
-from ariadne_graphql_modules import GraphQLObject
+from ariadne_graphql_modules import GraphQLID, GraphQLObject
 from graphql import GraphQLResolveInfo
 
 from ..database import db
@@ -22,7 +22,7 @@ class Query(GraphQLObject):
 
     @GraphQLObject.field()
     @staticmethod
-    async def group(obj, info: GraphQLResolveInfo, id: str) -> GroupType | None:
+    async def group(obj, info: GraphQLResolveInfo, id: GraphQLID) -> GroupType | None:
         try:
             id_int = int(id)
         except (TypeError, ValueError):

@@ -2,11 +2,46 @@ from typing import Any
 
 from .models.category import Category
 from .models.group import Group
+from .models.post import Post
 from .models.user import User
 
 
 def get_data() -> dict[str, dict[int, Any]]:
     return {
+        "groups": {
+            1: Group(
+                id=1,
+                name="Admins",
+                is_admin=True,
+            ),
+            2: Group(
+                id=2,
+                name="Members",
+                is_admin=False,
+            ),
+        },
+        "users": {
+            1: User(
+                id=1,
+                username="JohnDoe",
+                group_id=1,
+            ),
+            2: User(
+                id=2,
+                username="Alice",
+                group_id=1,
+            ),
+            3: User(
+                id=3,
+                username="Bob",
+                group_id=2,
+            ),
+            4: User(
+                id=4,
+                username="Mia",
+                group_id=2,
+            ),
+        },
         "categories": {
             1: Category(
                 id=1,
@@ -29,42 +64,30 @@ def get_data() -> dict[str, dict[int, Any]]:
                 parent_id=1,
             ),
         },
-        "groups": {
-            1: Group(
+        "posts": {
+            1: Post(
                 id=1,
-                name="Admins",
-                is_admin=True,
+                message="Lorem ipsum",
+                category_id=1,
+                poster_id=1,
             ),
-            2: Group(
+            2: Post(
                 id=2,
-                name="Members",
-                is_admin=False,
+                message="Dolor met",
+                category_id=2,
+                poster_id=2,
             ),
-        },
-        "users": {
-            1: User(
-                id=1,
-                username="JohnDoe",
-                email="johndoe@example.com",
-                group_id=1,
-            ),
-            2: User(
-                id=2,
-                username="Alice",
-                email="alice@example.com",
-                group_id=1,
-            ),
-            3: User(
+            3: Post(
                 id=3,
-                username="Bob",
-                email="b0b@example.com",
-                group_id=2,
+                message="Sit amet",
+                category_id=3,
+                poster_id=3,
             ),
-            4: User(
+            4: Post(
                 id=4,
-                username="Mia",
-                email="mia@example.com",
-                group_id=2,
+                message="Elit",
+                category_id=4,
+                poster_id=4,
             ),
         },
     }

@@ -68,6 +68,20 @@ async def test_query_groups_field_member_arg(exec_query):
 
 
 @pytest.mark.asyncio
+async def test_query_user(exec_query):
+    result = await exec_query('{ user(id: "2") { id username group { name } } }')
+    assert result.data == {
+        "user": {
+            "id": "2",
+            "username": "Alice",
+            "group": {
+                "name": "Admins",
+            },
+        },
+    }
+
+
+@pytest.mark.asyncio
 async def test_query_users(exec_query):
     result = await exec_query("{ users { id username group { name } } }")
     assert result.data == {
@@ -101,4 +115,75 @@ async def test_query_users(exec_query):
                 },
             },
         ],
+    }
+
+
+@pytest.mark.asyncio
+async def test_query_categories_field(exec_query):
+    result = await exec_query(
+        "{ categories { id name children { id name } posts { id content } } }"
+    )
+    assert result.data == {
+        "categories": [
+            {
+                "id": "1",
+                "name": "First category",
+                "children": [
+                    {
+                        "id": "3",
+                        "name": "Child category",
+                    },
+                    {
+                        "id": "4",
+                        "name": "Other child category",
+                    },
+                ],
+                "posts": [
+                    {
+                        "id": "1",
+                        "content": "Lorem ipsum",
+                    },
+                ],
+            },
+            {
+                "id": "2",
+                "name": "Second category",
+                "children": [],
+                "posts": [
+                    {
+                        "id": "2",
+                        "content": "Dolor met",
+                    },
+                ],
+            },
+        ],
+    }
+
+
+@pytest.mark.asyncio
+async def test_query_category_field(exec_query):
+    result = await exec_query(
+        '{ category(id: "1") { id name children { id name } posts { id content } } }'
+    )
+    assert result.data == {
+        "category": {
+            "id": "1",
+            "name": "First category",
+            "children": [
+                {
+                    "id": "3",
+                    "name": "Child category",
+                },
+                {
+                    "id": "4",
+                    "name": "Other child category",
+                },
+            ],
+            "posts": [
+                {
+                    "id": "1",
+                    "content": "Lorem ipsum",
+                },
+            ],
+        },
     }
