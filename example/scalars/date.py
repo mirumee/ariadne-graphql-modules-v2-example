@@ -14,4 +14,4 @@ class DateScalar(GraphQLScalar):
 
     @classmethod
     def parse_value(cls, value: str) -> date:
-        return datetime.strptime("%Y-%m-%d").date()
+        return datetime.strptime(value, "%Y-%m-%d").date()

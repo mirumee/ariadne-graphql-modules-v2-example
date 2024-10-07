@@ -13,6 +13,7 @@ class Subscription(GraphQLSubscription):
     event: EventType
 
     @GraphQLSubscription.source("event")
+    @staticmethod
     async def source_event(obj, info: GraphQLResolveInfo) -> AsyncGenerator[int, None]:
         i = 0
 
@@ -22,5 +23,6 @@ class Subscription(GraphQLSubscription):
             await sleep(float(random.randint(1, 50)) / 10)
 
     @GraphQLSubscription.resolver("event")
+    @staticmethod
     async def resolve_event(obj: int, info: GraphQLResolveInfo) -> dict:
         return {"id": obj, "payload": datetime.now()}
