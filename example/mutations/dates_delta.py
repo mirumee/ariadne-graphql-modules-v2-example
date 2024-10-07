@@ -1,3 +1,5 @@
+from datetime import date
+
 from ariadne_graphql_modules import GraphQLObject
 from graphql import GraphQLResolveInfo
 
@@ -11,10 +13,16 @@ class DatesDeltaType(GraphQLObject):
 
 
 class Mutation(GraphQLObject):
-    @GraphQLObject.field(name="datesDelta")
+    @GraphQLObject.field(
+        name="datesDelta",
+        args={
+            "a": GraphQLObject.argument(graphql_type=DateScalar),
+            "b": GraphQLObject.argument(graphql_type=DateScalar),
+        },
+    )
     @staticmethod
     def resolve_dates_delta(
-        obj, info: GraphQLResolveInfo, *, a: DateScalar, b: DateScalar
+        obj, info: GraphQLResolveInfo, *, a: date, b: date
     ) -> DatesDeltaType:
         years = abs(a.year - b.year)
         months = years * 12 + abs(a.month - b.month)
