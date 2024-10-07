@@ -2,7 +2,19 @@ import pytest
 
 
 @pytest.mark.asyncio
-async def test_query_hello_field(exec_query):
+async def test_query_compare_roles_mutation(exec_query):
+    result = await exec_query(
+        """
+        mutation {
+            compareRoles(a: ADMIN, b: MEMBER)
+        }
+        """
+    )
+    assert result.data == {"compareRoles": "A_GREATER"}
+
+
+@pytest.mark.asyncio
+async def test_query_dates_delta_mutation(exec_query):
     result = await exec_query(
         """
         mutation {

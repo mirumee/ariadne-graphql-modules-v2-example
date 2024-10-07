@@ -4,6 +4,7 @@ from ariadne_graphql_modules import GraphQLID, GraphQLObject, deferred
 from graphql import GraphQLResolveInfo
 
 from ..database import db
+from ..enums.role import RoleEnum
 from ..models.group import Group
 from ..models.post import Post
 from ..models.user import User
@@ -17,6 +18,7 @@ class UserType(GraphQLObject):
     id: GraphQLID
     username: str
     group: Annotated["GroupType", deferred(".group")]
+    role: RoleEnum
     posts: list[PostType]
 
     @GraphQLObject.resolver("group")

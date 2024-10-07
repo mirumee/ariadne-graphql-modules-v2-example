@@ -12,6 +12,7 @@ class DatesDeltaType(GraphQLObject):
 
 class Mutation(GraphQLObject):
     @GraphQLObject.field(name="datesDelta")
+    @staticmethod
     def resolve_dates_delta(
         obj, info: GraphQLResolveInfo, *, a: DateScalar, b: DateScalar
     ) -> DatesDeltaType:

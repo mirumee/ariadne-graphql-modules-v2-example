@@ -25,21 +25,25 @@ def get_data() -> dict[str, dict[int, Any]]:
                 id=1,
                 username="JohnDoe",
                 group_id=1,
+                role="ADMIN",
             ),
             2: User(
                 id=2,
                 username="Alice",
                 group_id=1,
+                role="ADMIN",
             ),
             3: User(
                 id=3,
                 username="Bob",
                 group_id=2,
+                role="MEMBER",
             ),
             4: User(
                 id=4,
                 username="Mia",
                 group_id=2,
+                role="GUEST",
             ),
         },
         "categories": {

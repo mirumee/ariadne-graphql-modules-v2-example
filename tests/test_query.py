@@ -69,11 +69,12 @@ async def test_query_groups_field_member_arg(exec_query):
 
 @pytest.mark.asyncio
 async def test_query_user(exec_query):
-    result = await exec_query('{ user(id: "2") { id username group { name } } }')
+    result = await exec_query('{ user(id: "2") { id username role group { name } } }')
     assert result.data == {
         "user": {
             "id": "2",
             "username": "Alice",
+            "role": "ADMIN",
             "group": {
                 "name": "Admins",
             },
@@ -83,12 +84,13 @@ async def test_query_user(exec_query):
 
 @pytest.mark.asyncio
 async def test_query_users(exec_query):
-    result = await exec_query("{ users { id username group { name } } }")
+    result = await exec_query("{ users { id username role group { name } } }")
     assert result.data == {
         "users": [
             {
                 "id": "1",
                 "username": "JohnDoe",
+                "role": "ADMIN",
                 "group": {
                     "name": "Admins",
                 },
@@ -96,6 +98,7 @@ async def test_query_users(exec_query):
             {
                 "id": "2",
                 "username": "Alice",
+                "role": "ADMIN",
                 "group": {
                     "name": "Admins",
                 },
@@ -103,6 +106,7 @@ async def test_query_users(exec_query):
             {
                 "id": "3",
                 "username": "Bob",
+                "role": "MEMBER",
                 "group": {
                     "name": "Members",
                 },
@@ -110,6 +114,7 @@ async def test_query_users(exec_query):
             {
                 "id": "4",
                 "username": "Mia",
+                "role": "GUEST",
                 "group": {
                     "name": "Members",
                 },
