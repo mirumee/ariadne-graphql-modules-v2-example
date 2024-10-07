@@ -15,7 +15,7 @@ class RoleDiff(IntEnum):
 class Mutation(GraphQLObject):
     @GraphQLObject.field(name="compareRoles")
     @staticmethod
-    def resolveCompareRoles(
+    def resolve_compare_roles(
         obj, info: GraphQLResolveInfo, *, a: RoleEnum, b: RoleEnum
     ) -> RoleDiff:
         index_a = RoleEnum.__members__.index(a)
