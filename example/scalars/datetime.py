@@ -7,7 +7,7 @@ from ariadne_graphql_modules import GraphQLScalar
 class DateTimeScalar(GraphQLScalar):
     @classmethod
     def serialize(cls, value: Union["DateTimeScalar", datetime]) -> str:
-        if isinstance(value, cls):
+        if isinstance(value, DateTimeScalar):
             value = cast(datetime, value.unwrap())
 
         return value.isoformat()
