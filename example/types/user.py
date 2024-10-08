@@ -4,6 +4,7 @@ from ariadne_graphql_modules import GraphQLID, GraphQLObject, deferred
 from graphql import GraphQLResolveInfo
 
 from ..database import db
+from ..interfaces.search_result import SearchResultInterface
 from ..enums.role import RoleEnum
 from ..models.group import Group
 from ..models.post import Post
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
     from .group import GroupType
 
 
-class UserType(GraphQLObject):
+class UserType(GraphQLObject, SearchResultInterface):
     id: GraphQLID
     username: str
     group: Annotated["GroupType", deferred(".group")]
@@ -30,3 +31,8 @@ class UserType(GraphQLObject):
     @staticmethod
     async def resolve_posts(user: User, info: GraphQLResolveInfo) -> list[Post]:
         return await db.get_all("posts", poster_id=user.id)
+
+    @GraphQLObject.resolver("summary")
+    @staticmethod
+    async def resolve_summary(obj: User, info: GraphQLResolveInfo):
+        return f"#{obj.id}: {obj.username}"
