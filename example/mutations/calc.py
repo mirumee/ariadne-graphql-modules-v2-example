@@ -3,13 +3,11 @@ from enum import StrEnum
 from ariadne_graphql_modules import GraphQLInput, GraphQLObject
 from graphql import GraphQLResolveInfo
 
-from ..scalars.date import DateScalar
-
 
 class CalcOperation(StrEnum):
     ADD = "add"
     SUB = "sub"
-    MUL = "MUL"
+    MUL = "mul"
 
 
 class CalcInput(GraphQLInput):
