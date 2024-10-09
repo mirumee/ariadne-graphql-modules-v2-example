@@ -2,6 +2,18 @@ import pytest
 
 
 @pytest.mark.asyncio
+async def test_query_calc_mutation(exec_query):
+    result = await exec_query(
+        """
+        mutation {
+            calc(input: {a: 4, b: 3, op: MUL})
+        }
+        """
+    )
+    assert result.data == {"calc": 12}
+
+
+@pytest.mark.asyncio
 async def test_query_compare_roles_mutation(exec_query):
     result = await exec_query(
         """
