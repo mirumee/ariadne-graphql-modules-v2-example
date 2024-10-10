@@ -3,8 +3,6 @@ from enum import IntEnum
 from ariadne_graphql_modules import GraphQLObject
 from graphql import GraphQLResolveInfo
 
-from ..enums.role import RoleEnum
-
 
 class TestEnum(IntEnum):
     LOREM = 0
