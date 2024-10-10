@@ -43,3 +43,17 @@ async def test_query_dates_delta_mutation(exec_query):
             "days": 3751,
         },
     }
+
+
+@pytest.mark.asyncio
+async def test_query_enum_repr_mutation(exec_query):
+    result = await exec_query(
+        """
+        mutation EnumRepr {
+            enumRepr(val: LOREM)
+        }
+        """
+    )
+    assert result.data == {
+        "enumRepr": "<TestEnum.LOREM: 0>",
+    }
